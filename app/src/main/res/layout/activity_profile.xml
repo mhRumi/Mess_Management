@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorPrimaryDark"
+    android:layout_gravity="center"
+    android:orientation="vertical"
+    android:padding="30dp"
+    tools:context=".Profile">
+
+
+
+    <ImageView
+        android:layout_width="200dp"
+        android:layout_height="150dp"
+       android:src="@drawable/ic_account_circle_black_24dp"
+        android:layout_gravity="center"
+        />
+
+    <TextView
+        android:id="@+id/username"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginBottom="30dp"
+        android:textSize="30sp"
+        android:textAlignment="center"
+        />
+
+
+    <EditText
+        android:layout_gravity="center"
+        android:id="@+id/date"
+        android:layout_width="250dp"
+        android:layout_height="50dp"
+        android:textSize="20sp"
+        android:hint="Date"
+        android:textAlignment="center"
+        />
+
+    <EditText
+        android:layout_gravity="center"
+        android:id="@+id/amount"
+        android:layout_width="250dp"
+        android:layout_height="50dp"
+        android:textSize="20sp"
+        android:hint="Amount"
+        android:text="0"
+        android:textAlignment="center"
+        />
+
+    <EditText
+        android:layout_gravity="center"
+        android:id="@+id/meal"
+        android:layout_width="250dp"
+        android:layout_height="50dp"
+        android:textSize="20sp"
+        android:text="2"
+        android:hint="Meal"
+        android:textAlignment="center"
+        />
+
+    <Button
+        android:layout_gravity="center"
+        android:id="@+id/submit"
+        android:layout_width="90dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="30dp"
+        android:background="@drawable/buttonshape"
+        android:text="Submit"
+        android:textSize="20sp" />
+
+    <ProgressBar
+        android:id="@+id/loginprogress"
+        android:visibility="gone"
+        android:layout_gravity="center"
+        android:layout_marginTop="50dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+
+    <DatePicker
+        android:id="@+id/picdate"
+        android:visibility="gone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+    </DatePicker>
+
+
+
+
+</LinearLayout>

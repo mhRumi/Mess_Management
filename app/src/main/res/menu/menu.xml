@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    >
+
+
+
+    <item
+        android:id="@+id/dash"
+        android:icon="@drawable/ic_account_circle_black_24dp"
+        android:title="Dashboard"
+        />
+
+    <item
+
+        android:id="@+id/myinfo"
+        android:title="My info"
+        app:showAsAction="never"
+        />
+
+    <item
+        android:id="@+id/bazar_shcedule"
+        android:title="Bazar shcedule"
+        app:showAsAction="never"
+        />
+    <item
+        android:id="@+id/setting"
+        android:title="Setting"
+        android:icon="@drawable/ic_settings_black_24dp"
+        />
+
+
+    <item
+        android:id="@+id/logout"
+        android:title="Log out"
+        app:showAsAction="never"
+        />
+
+</menu>
