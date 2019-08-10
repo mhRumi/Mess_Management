@@ -24,6 +24,11 @@
         app:showAsAction="never"
         />
     <item
+        android:id="@+id/create_bazar_shcedule"
+        android:title="Create Bazar shcedule"
+
+        />
+    <item
         android:id="@+id/setting"
         android:title="Setting"
         android:icon="@drawable/ic_settings_black_24dp"

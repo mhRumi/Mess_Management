@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">Mess Management</string>
     <string name="Name"></string>
+    <string name="visibility"></string>
 </resources>

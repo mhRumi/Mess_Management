@@ -79,6 +79,17 @@ public class Profile extends AppCompatActivity implements View.OnClickListener {
             Intent intent = new Intent(getApplicationContext(),Personal_info.class);
             startActivity(intent);
         }
+        else if(item.getItemId() == R.id.create_bazar_shcedule){
+
+            if(Name.equalsIgnoreCase("admin")){
+                Intent intent = new Intent(this,BazarListCreate.class);
+                startActivity(intent);
+            }
+        }
+        else if(item.getItemId() == R.id.bazar_shcedule){
+            Intent intent = new Intent(this,ShowBazarList.class);
+            startActivity(intent);
+        }
         return super.onOptionsItemSelected(item);
     }
 
