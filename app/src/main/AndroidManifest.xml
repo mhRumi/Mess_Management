@@ -12,7 +12,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".FinalCalculation"></activity>
+        <activity android:name=".Notification"></activity>
+        <activity android:name=".FinalCalculation" />
         <activity android:name=".ShowBazarList" />
         <activity android:name=".BazarListCreate" />
         <activity android:name=".Personal_info" />

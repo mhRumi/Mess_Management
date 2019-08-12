@@ -2,7 +2,12 @@ package com.example.messmanagement;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
 
+import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
@@ -36,6 +41,8 @@ public class Profile extends AppCompatActivity implements View.OnClickListener {
     private ProgressBar updateprogress;
     private DatePicker datePicker;
     public static String Name, Date;
+    private final String channel_id = "public notifications";
+    private final int notification_id = 001;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -155,9 +162,11 @@ public class Profile extends AppCompatActivity implements View.OnClickListener {
                     Toast.makeText(getApplicationContext(),response.toString(),Toast.LENGTH_SHORT).show();
                     if(response.toString().equals("Updated successfully")){
 
+                        setNotification();
                         date.setText(null);
                         amount.setText(null);
                         meal.setText(null);
+
 
                     }else{
                         //progressBar.setVisibility(View.GONE);
@@ -192,5 +201,30 @@ public class Profile extends AppCompatActivity implements View.OnClickListener {
         MySingleton.getInstance(this).addToRequestQueue(stringRequest);
 
 
+    }
+
+    public void setNotification(){
+        String message = "Bazar is done by "+Name+"\n and the cost is "+amount.getText().toString().trim()+" Tk";
+
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(this)
+
+        .setSmallIcon(R.drawable.ic_message_black_24dp)
+        .setContentTitle("Bazar done !!!")
+        .setContentText(message)
+        .setAutoCancel(true);
+
+        Intent intent = new Intent(this,Notification.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        intent.putExtra("Message",message);
+
+        PendingIntent pendingIntent = PendingIntent.getActivity(this,0,intent,PendingIntent.FLAG_UPDATE_CURRENT);
+        builder.setContentIntent(pendingIntent);
+
+
+        NotificationManager notificationManager =(NotificationManager) getSystemService(
+                Context.NOTIFICATION_SERVICE
+        );
+
+        notificationManager.notify(0,builder.build());
     }
 }
