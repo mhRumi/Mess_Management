@@ -90,6 +90,10 @@ public class Profile extends AppCompatActivity implements View.OnClickListener {
             Intent intent = new Intent(this,ShowBazarList.class);
             startActivity(intent);
         }
+        else if(item.getItemId() == R.id.calculation){
+            Intent intent = new Intent(this,FinalCalculation.class);
+            startActivity(intent);
+        }
         return super.onOptionsItemSelected(item);
     }
 

@@ -13,5 +13,6 @@ public class Constant {
     public static final String url_personalInfo = root_url+"Personal_info.php";
     public static final String url_updateList = root_url+"UpdateBazarList.php";
     public static final String url_showBazarList = root_url+"ShowBazarList.php";
+    public static final String url_finalCalculation = root_url+"FinalCalculation.php";
 
 }
