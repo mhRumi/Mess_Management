@@ -9,7 +9,9 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -45,6 +47,8 @@ public class Profile extends AppCompatActivity implements View.OnClickListener {
     private final int notification_id = 001;
     private ProgressBar progressBar;
 
+    private Boolean exit = false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -75,6 +79,10 @@ public class Profile extends AppCompatActivity implements View.OnClickListener {
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         if(item.getItemId() == R.id.logout){
+
+            SharedPreferences settings = getSharedPreferences("login", Context.MODE_PRIVATE);
+            settings.edit().clear().commit();
+
             this.finish();
             Intent intent = new Intent(getApplicationContext(),MainActivity.class);
             startActivity(intent);
@@ -231,5 +239,26 @@ public class Profile extends AppCompatActivity implements View.OnClickListener {
         );
 
         notificationManager.notify(0,builder.build());
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (exit) {
+            finish(); // finish activity
+        } else {
+            exit = true;
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    exit = false;
+                    Intent a = new Intent(Intent.ACTION_MAIN);
+                    a.addCategory(Intent.CATEGORY_HOME);
+                    a.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    startActivity(a);
+                }
+            },  10);
+
+        }
+
     }
 }

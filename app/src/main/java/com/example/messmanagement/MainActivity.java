@@ -3,12 +3,15 @@ package com.example.messmanagement;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
     private Button signin, signup;
+    private String Name;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,8 +30,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         if(view.getId() == R.id.signin){
 
-            Intent intent = new Intent(this,SignIn.class);
-            startActivity(intent);
+            SharedPreferences sharedPreferences = getSharedPreferences("login",MODE_PRIVATE);
+
+            if(sharedPreferences.contains("Name") && sharedPreferences.contains("Password")){
+                Name = sharedPreferences.getString("Name","nothing");
+                Intent intent = new Intent(getApplicationContext(),Profile.class);
+                intent.putExtra("Name",Name);
+                startActivity(intent);
+            }else{
+                Intent intent = new Intent(this,SignIn.class);
+                startActivity(intent);
+            }
         }
         else if(view.getId() == R.id.signup){
             Intent intent = new Intent(this,SignUp.class);

@@ -55,7 +55,6 @@ public class SignIn extends AppCompatActivity implements View.OnClickListener {
         SharedPreferences sharedPreferences = getSharedPreferences("login",MODE_PRIVATE);
 
         if(sharedPreferences.contains("Name") && sharedPreferences.contains("Password")){
-            Toast.makeText(getApplicationContext(),"its working",Toast.LENGTH_SHORT).show();
             name.setText(sharedPreferences.getString("Name","nothing"));
             password.setText(sharedPreferences.getString("Password","nothing"));
         }
