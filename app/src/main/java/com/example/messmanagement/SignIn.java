@@ -3,8 +3,11 @@ package com.example.messmanagement;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -31,6 +34,8 @@ public class SignIn extends AppCompatActivity implements View.OnClickListener {
     private Button button;
     private ProgressBar loginprogress;
 
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,11 +44,22 @@ public class SignIn extends AppCompatActivity implements View.OnClickListener {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
 
+
         name = findViewById(R.id.signinName);
         password = findViewById(R.id.signinpass);
         button = findViewById(R.id.signinfinal);
         loginprogress = findViewById(R.id.loginprogress);
         button.setOnClickListener(this);
+
+
+        SharedPreferences sharedPreferences = getSharedPreferences("login",MODE_PRIVATE);
+
+        if(sharedPreferences.contains("Name") && sharedPreferences.contains("Password")){
+            Toast.makeText(getApplicationContext(),"its working",Toast.LENGTH_SHORT).show();
+            name.setText(sharedPreferences.getString("Name","nothing"));
+            password.setText(sharedPreferences.getString("Password","nothing"));
+        }
+
 
     }
 
@@ -87,8 +103,16 @@ public class SignIn extends AppCompatActivity implements View.OnClickListener {
                     Toast.makeText(getApplicationContext(),response.toString(),Toast.LENGTH_SHORT).show();
                     if(response.toString().equals("Successfully login")){
                         loginprogress.setVisibility(View.GONE);
+
+                        SharedPreferences.Editor editor = getSharedPreferences("login", MODE_PRIVATE).edit();
+
+                        editor.putString("Name",Name);
+                        editor.putString("Password",loginPass);
+                        editor.apply();
+
                         name.setText(null);
                         password.setText(null);
+
                         Intent intent = new Intent(getApplicationContext(),Profile.class);
                         intent.putExtra("Name",Name);
                         startActivity(intent);

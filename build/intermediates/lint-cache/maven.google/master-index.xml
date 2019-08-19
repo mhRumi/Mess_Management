@@ -130,4 +130,5 @@
   <zipflinger/>
   <androidx.autofill/>
   <androidx.ads/>
+  <com.android/>
 </metadata>

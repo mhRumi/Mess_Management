@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Patterns;
 import android.view.MenuItem;
@@ -109,6 +110,13 @@ public class SignUp extends AppCompatActivity implements View.OnClickListener {
                 try {
                     Toast.makeText(getApplicationContext(),response.toString(),Toast.LENGTH_SHORT).show();
                     if(response.toString().equals("Registration successfull")){
+
+                        SharedPreferences.Editor editor = getSharedPreferences("login", MODE_PRIVATE).edit();
+
+                        editor.putString("Name",Name);
+                        editor.putString("Password",Password);
+                        editor.apply();
+
                         progressBar.setVisibility(View.GONE);
                         name.setText(null);
                         email.setText(null);

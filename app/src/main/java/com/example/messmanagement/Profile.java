@@ -43,6 +43,7 @@ public class Profile extends AppCompatActivity implements View.OnClickListener {
     public static String Name, Date;
     private final String channel_id = "public notifications";
     private final int notification_id = 001;
+    private ProgressBar progressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,6 +53,7 @@ public class Profile extends AppCompatActivity implements View.OnClickListener {
         Bundle bundle = getIntent().getExtras();
         Name = bundle.getString("Name");
 
+        progressBar = findViewById(R.id.update_pro);
         username = findViewById(R.id.username);
         username.setText(Name);
         datePicker = findViewById(R.id.picdate);
@@ -111,7 +113,7 @@ public class Profile extends AppCompatActivity implements View.OnClickListener {
         }
 
         if(view.getId() == R.id.submit){
-            update(Date);
+            update(Date,view);
         }
 
 
@@ -131,7 +133,9 @@ public class Profile extends AppCompatActivity implements View.OnClickListener {
         return date.toString();
     }
 
-    private void update(String datepic) {
+    private void update(String datepic, View view) {
+
+        progressBar.setVisibility(View.VISIBLE);
 
         final String Date = date.getText().toString().trim();
         final String Amount = amount.getText().toString().trim();
@@ -162,6 +166,7 @@ public class Profile extends AppCompatActivity implements View.OnClickListener {
                     Toast.makeText(getApplicationContext(),response.toString(),Toast.LENGTH_SHORT).show();
                     if(response.toString().equals("Updated successfully")){
 
+                        progressBar.setVisibility(View.GONE);
                         setNotification();
                         date.setText(null);
                         amount.setText(null);
@@ -169,7 +174,7 @@ public class Profile extends AppCompatActivity implements View.OnClickListener {
 
 
                     }else{
-                        //progressBar.setVisibility(View.GONE);
+                        progressBar.setVisibility(View.GONE);
                     }
                     JSONObject jsonObject = new JSONObject(response);
                     Toast.makeText(getApplicationContext(),jsonObject.getString("message"),Toast.LENGTH_SHORT).show();
