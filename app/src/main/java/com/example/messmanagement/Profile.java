@@ -12,6 +12,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Message;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -217,14 +218,28 @@ public class Profile extends AppCompatActivity implements View.OnClickListener {
     }
 
     public void setNotification(){
-        String message = "Bazar is done by "+Name+"\n and the cost is "+amount.getText().toString().trim()+" Tk";
 
+        String tk =amount.getText().toString().trim();
+        String message;
+        String Message;
+        String title;
+
+        if(tk.equalsIgnoreCase("0")){
+            Message = "Hei "+Name+"\n You have update your meal\n "+"You have taken "+meal.getText().toString().trim()+" meal today";
+            title = "Meal updated";
+        }else{
+            Message = "Bazar is done by "+Name+"\n and the cost is "+amount.getText().toString().trim()+" Tk";
+            title = "Bazar done !!!";
+        }
+
+        message = Message;
         NotificationCompat.Builder builder = new NotificationCompat.Builder(this)
 
         .setSmallIcon(R.drawable.ic_message_black_24dp)
-        .setContentTitle("Bazar done !!!")
+        .setContentTitle(title)
         .setContentText(message)
         .setAutoCancel(true);
+        builder.setVibrate(new long[]{0, 500, 1000});
 
         Intent intent = new Intent(this,Notification.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
