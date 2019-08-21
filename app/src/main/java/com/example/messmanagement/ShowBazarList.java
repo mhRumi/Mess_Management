@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.webkit.WebView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -18,7 +19,8 @@ import org.json.JSONObject;
 import static com.android.volley.Request.Method.POST;
 
 public class ShowBazarList extends AppCompatActivity {
-    private TextView table;
+    private WebView webView;
+    private String htmlBazarListMiddle;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,8 +30,7 @@ public class ShowBazarList extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
 
-        table = findViewById(R.id.show_list);
-
+        webView = findViewById(R.id.webviewBazarList);
         showBazarList();
     }
 
@@ -47,7 +48,21 @@ public class ShowBazarList extends AppCompatActivity {
             @Override
             public void onResponse(String response) {
                 try {
-                    table.setText(response.toString());
+
+                    String[] content = response.toString().split("\n");
+                    for(int i=0; i<content.length; i++){
+                        String[] element = content[i].split("-");
+
+                        htmlBazarListMiddle +=   "   <tr>\n" +
+                                "<td>"+element[0]+"</td>\n" +
+                                "<td>"+element[1]+"</td>\n" +
+                                "<td>"+element[2]+"</td>\n" +
+                                "  </tr>\n" ;
+                    }
+
+
+                    String htmlTable = Constant.htmlBazarlistFirst+htmlBazarListMiddle+Constant.htmlBazarlistLast;
+                    webView.loadDataWithBaseURL(null,htmlTable,"text/html","utf-8",null);
 
                     JSONObject jsonObject = new JSONObject(response);
                     Toast.makeText(getApplicationContext(),jsonObject.getString("message"),Toast.LENGTH_SHORT).show();

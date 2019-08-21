@@ -7,9 +7,11 @@ import androidx.core.app.NotificationManagerCompat;
 
 import android.app.NotificationManager;
 import android.app.PendingIntent;
+import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -22,6 +24,7 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
@@ -43,10 +46,12 @@ public class Profile extends AppCompatActivity implements View.OnClickListener {
     private Button submit;
     private ProgressBar updateprogress;
     private DatePicker datePicker;
+    private TimePicker timePicker;
     public static String Name, Date;
     private final String channel_id = "public notifications";
     private final int notification_id = 001;
     private ProgressBar progressBar;
+    View view;
 
     private Boolean exit = false;
 
@@ -62,13 +67,17 @@ public class Profile extends AppCompatActivity implements View.OnClickListener {
         username = findViewById(R.id.username);
         username.setText(Name);
         datePicker = findViewById(R.id.picdate);
+        timePicker = findViewById(R.id.timepicker);
+        timePicker.setIs24HourView(true);
         meal = findViewById(R.id.meal);
         date = findViewById(R.id.date);
         amount = findViewById(R.id.amount);
         submit = findViewById(R.id.submit);
         submit.setOnClickListener(this);
         date.setOnClickListener(this);
+
     }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -130,17 +139,28 @@ public class Profile extends AppCompatActivity implements View.OnClickListener {
 
     String currentDate(){
         StringBuilder date = new StringBuilder();
+        StringBuilder dateForAutoUpdate = new StringBuilder();
         if(datePicker.getDayOfMonth()<10){
             date.append("0"+datePicker.getDayOfMonth()+"/");
-        }else
-        date.append(datePicker.getDayOfMonth()+"/");
+            dateForAutoUpdate.append("0"+(datePicker.getDayOfMonth()-1)+"/");
+        }else {
+            date.append(datePicker.getDayOfMonth() + "/");
+            dateForAutoUpdate.append(datePicker.getDayOfMonth()-1 + "/");
+        }
         if(datePicker.getMonth() <10){
             date.append("0"+(datePicker.getMonth()+1)+"/");
-        }else
-        date.append((datePicker.getMonth()+1)+"/");
+            dateForAutoUpdate.append("0"+(datePicker.getMonth()+1)+"/");
+        }else{
+            date.append((datePicker.getMonth()+1)+"/");
+            dateForAutoUpdate.append((datePicker.getMonth()+1)+"/");
+        }
+
         date.append(datePicker.getYear());
+        dateForAutoUpdate.append(datePicker.getYear());
+        Date = dateForAutoUpdate.toString();
         return date.toString();
     }
+
 
     private void update(String datepic, View view) {
 
@@ -217,6 +237,7 @@ public class Profile extends AppCompatActivity implements View.OnClickListener {
 
     }
 
+
     public void setNotification(){
 
         String tk =amount.getText().toString().trim();
@@ -240,6 +261,7 @@ public class Profile extends AppCompatActivity implements View.OnClickListener {
         .setContentText(message)
         .setAutoCancel(true);
         builder.setVibrate(new long[]{0, 500, 1000});
+        builder.setLights(0xff0000ff, 300, 1000);
 
         Intent intent = new Intent(this,Notification.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);

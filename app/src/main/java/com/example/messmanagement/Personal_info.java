@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.webkit.WebView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -22,8 +23,9 @@ import java.util.Map;
 import static com.android.volley.Request.Method.POST;
 
 public class Personal_info extends AppCompatActivity {
-    private TextView personal_table;
 
+    private WebView webView;
+    private String htmlMiddle;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,7 +35,7 @@ public class Personal_info extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
 
-        personal_table = findViewById(R.id.personldashboard);
+        webView = findViewById(R.id.webview_personal);
 
         personal_info();
     }
@@ -54,7 +56,22 @@ public class Personal_info extends AppCompatActivity {
             @Override
             public void onResponse(String response) {
                 try {
-                    personal_table.setText(response.toString());
+
+
+                    String[] content = response.toString().split("\n");
+                    for(int i=0; i<content.length; i++){
+                        String[] element = content[i].split("-");
+
+                        htmlMiddle +=   "   <tr>\n" +
+                                "<td>"+element[0]+"</td>\n" +
+                                "<td>"+element[1]+"</td>\n" +
+                                "<td>"+element[2]+"</td>\n" +
+                                "<td>"+element[3]+"</td>\n" +
+                                "  </tr>\n" ;
+                    }
+
+                    String htmlTable = Constant.html+htmlMiddle+Constant.htmlLast;
+                    webView.loadDataWithBaseURL(null,htmlTable,"text/html","utf-8",null);
 
                     JSONObject jsonObject = new JSONObject(response);
                     Toast.makeText(getApplicationContext(),jsonObject.getString("message"),Toast.LENGTH_SHORT).show();
